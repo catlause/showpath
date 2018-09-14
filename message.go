@@ -20,12 +20,20 @@ func handleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload inter
 
 // Exploration represents the results of an exploration
 type Graph struct {
-	Coords []Coord `json:"coords"`
+	Nodes []Node `json:"nodes"`
+	Edges []Edge `json:"edges"`
 }
 
-type Coord struct {
-	X int `json:"xpos"`
-	Y int `json:"ypos"`
+type Node struct {
+	X  int `json:"xpos"`
+	Y  int `json:"ypos"`
+}
+
+type Edge struct {
+	X0 int `json:"x0"`
+	Y0 int `json:"y0"`
+	X1 int `json:"x1"`
+	Y1 int `json:"y1"`
 }
 
 // explore explores a path.
@@ -33,9 +41,12 @@ type Coord struct {
 func getgraph() (g Graph, err error) {
 	err = nil
 	g = Graph{
-		Coords: []Coord{
-			Coord{X: 122, Y: 238},
-			Coord{X: 33, Y: 117},
+		Nodes: []Node{
+			Node{X: 122, Y: 238},
+			Node{X: 33, Y: 117},
+		},
+		Edges: []Edge{
+			Edge{X0: 122, Y0: 238, X1: 33, Y1: 117},
 		},
 	}
 	return
