@@ -1,0 +1,7 @@
+{
+  "app_name": "ShortPath",
+  "icon_path_windows": "resources/icon.ico",
+  "environments": [
+	{"arch": "386", "os": "windows"}
+  ]
+}
