@@ -1,17 +1,29 @@
 let world = {
-	addNode(xpos, ypos) {
-		let div = document.createElement("div");
-		div.className = "node";
-		div.onclick = function() {world.addNode(23,32);};
-		div.innerHTML = '';
-		div.style.left = (xpos-8)+'px';
-		div.style.top = (ypos-8)+'px';
-		document.getElementById("container").appendChild(div);
+	addNode(xpos, ypos, color) {
+		let svg_graph = document.getElementById("svg_graph");
+		let svgNS = svg_graph.namespaceURI;
+		let node = document.createElementNS(svgNS, "circle");
+		node.setAttribute("cx", xpos);
+		node.setAttribute("cy", ypos);
+		node.setAttribute("r", 8);
+		node.setAttribute("stroke", color);
+		node.setAttribute("stroke-width", 2);
+		node.setAttribute("fill", color);
+		node.setAttribute("fill-opacity", 0.5);
+		node.onclick = function() {world.addNode(23,32,"green");};
+		svg_graph.appendChild(node);
 	},
-	addEdge(x0, y0, x1, y1) {
-		let line = "<line x1='"+x0+"px' y1='"+y0+"px' x2='"+x1+"px' y2='"+y1+"px' stroke='black' stroke-width='2' />";
-		let bgsvg = 'url("'+"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1'>"+line+'</svg>")';
-		document.getElementById("container").style.backgroundImage=bgsvg;
+	addEdge(x0, y0, x1, y1, color) {
+		let svg_graph = document.getElementById("svg_graph");
+		let svgNS = svg_graph.namespaceURI;
+		let edge = document.createElementNS(svgNS, "line");
+		edge.setAttribute("x1", x0);
+		edge.setAttribute("y1", y0);
+		edge.setAttribute("x2", x1);
+		edge.setAttribute("y2", y1);
+		edge.setAttribute("stroke", color);
+		edge.setAttribute("stroke-width", 2);
+		svg_graph.appendChild(edge);
 	},
 	init: function() {
 		document.addEventListener('astilectron-ready', function() {
@@ -30,12 +42,12 @@ let world = {
 			let nodes = message.payload.nodes;
 			for (var idx in nodes) {
 				let node = nodes[idx];
-				world.addNode(node.xpos, node.ypos);
+				world.addNode(node.xpos, node.ypos, node.color);
 			}
 			let edges = message.payload.edges;
 			for (var idx in edges) {
 				let edge = edges[idx];
-				world.addEdge(edge.x0, edge.y0, edge.x1, edge.y1);
+				world.addEdge(edge.x0, edge.y0, edge.x1, edge.y1, edge.color);
 			}
 		})
 	}
