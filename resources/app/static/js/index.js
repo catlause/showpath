@@ -9,7 +9,9 @@ let world = {
 		document.getElementById("container").appendChild(div);
 	},
 	addEdge(x0, y0, x1, y1) {
-		document.getElementById("container").style.backgroundImage=`url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1'><circle cx='100px' cy='100px' r='40px' stroke='black' stroke-width='2' fill='none' /></svg>")`;
+		let line = "<line x1='"+x0+"px' y1='"+y0+"px' x2='"+x1+"px' y2='"+y1+"px' stroke='black' stroke-width='2' />";
+		let bgsvg = 'url("'+"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1'>"+line+'</svg>")';
+		document.getElementById("container").style.backgroundImage=bgsvg;
 	},
 	init: function() {
 		document.addEventListener('astilectron-ready', function() {
