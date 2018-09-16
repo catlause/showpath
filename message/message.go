@@ -1,12 +1,15 @@
-package main
+package message
 
 import (
+	_ "showpath/core/graph"
+	"showpath/core/ptlayer"
+
 	"github.com/asticode/go-astilectron"
 	"github.com/asticode/go-astilectron-bootstrap"
 )
 
-// handleMessages handles messages
-func handleMessages(_ *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
+// handles messages
+func MessageHandler(_ *astilectron.Window, m bootstrap.MessageIn) (payload interface{}, err error) {
 	switch m.Name {
 	case "getgraph":
 		// GetGraph
@@ -39,16 +42,17 @@ type Edge struct {
 
 func getgraph() (g Graph, err error) {
 	err = nil
+	pts := ptlayer.RandPts(20, 700, 670)
+	var nodes []Node = nil
+	for _, pt := range pts {
+		nodes = append(nodes, Node{
+			X:     pt.X,
+			Y:     pt.Y,
+			Color: "yellow",
+		})
+	}
 	g = Graph{
-		Nodes: []Node{
-			Node{X: 122, Y: 238, Color: "yellow"},
-			Node{X: 33, Y: 117, Color: "yellow"},
-			Node{X: 150, Y: 40, Color: "yellow"},
-		},
-		Edges: []Edge{
-			Edge{X0: 122, Y0: 238, X1: 33, Y1: 117, Color: "steelblue"},
-			Edge{X0: 33, Y0: 117, X1: 150, Y1: 40, Color: "steelblue"},
-		},
+		Nodes: nodes,
 	}
 	return
 }
